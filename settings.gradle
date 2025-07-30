@@ -1,0 +1,5 @@
+rootProject.name = 'SkylerBox'
+include 'SkylerKafka'
+include 'SkylerRedis'
+include 'SkylerLoadBalancer'
+

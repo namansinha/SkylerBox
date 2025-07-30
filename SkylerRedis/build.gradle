@@ -1,0 +1,20 @@
+// SkylerKafka/build.gradle
+dependencies {
+    // This module is a Spring Boot application, so it needs web starter
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+    // Add any other specific dependencies for the 'app' module
+    // e.g., database drivers, security, etc.
+    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // implementation 'com.h2database:h2'
+}
+
+// Make the 'app' module build a runnable JAR
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false // Disable plain JAR to avoid conflicts with bootJar
+}

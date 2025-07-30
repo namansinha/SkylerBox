@@ -1,0 +1,50 @@
+// build.gradle (Root Project)
+
+plugins {
+    // Apply the Spring Boot plugin at the root, but set `apply false`
+    // so it's not applied to the root project itself, but can be applied
+    // to subprojects.
+    id 'org.springframework.boot' version '3.3.1' apply false
+    id 'io.spring.dependency-management' version '1.1.5' apply false
+    id 'java-library' // Apply java-library to the root if it's a library, or 'java'
+}
+
+allprojects {
+    // Define common repositories for all projects
+    repositories {
+        mavenCentral()
+    }
+
+    // Define common Java version for all projects
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17) // Or your preferred Java version
+        }
+    }
+}
+
+subprojects {
+    // Apply plugins common to all sub-modules
+    apply plugin: 'java-library' // Use java-library for reusable modules, 'application' for runnable apps
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    // Configure JUnit Platform for testing in all sub-modules
+    test {
+        useJUnitPlatform()
+    }
+
+    // Define common dependencies for all sub-modules
+    dependencies {
+        // Spring Boot starters common to all modules (e.g., for utility modules)
+        // If a module is a full Spring Boot application (like 'app'), it will add more specific starters.
+        // For shared modules, you might include minimal Spring dependencies if they are truly shared.
+        // For example, if 'common' has Spring annotations, it might need spring-context.
+        // implementation 'org.springframework.boot:spring-boot-starter' // Uncomment if needed in common modules
+
+        // Mockito and JUnit for testing in all modules
+        testImplementation 'org.mockito:mockito-core:5.12.0' // Latest stable version
+        testImplementation 'org.mockito:mockito-junit-jupiter:5.12.0' // For JUnit 5 integration
+        testImplementation 'org.springframework.boot:spring-boot-starter-test' // Includes JUnit 5, Mockito, AssertJ, Hamcrest
+    }
+}
